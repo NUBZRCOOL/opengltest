@@ -38,14 +38,30 @@ int main(int argc, char **argv) {
     
     glViewport(0, 0, 800, 600);
 
+    double r = .53f;
+    double g = .92f;
+    double b = 1.0f;
+
+    double rIncrement = 0.01f;
+    double gIncrement = 0.01f;
+    double bIncrement = 0.01f;
+
     glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
 
     while (!glfwWindowShouldClose(window)) {
 
         process_input(window);
 
-        glClearColor(.529f, .808f, .922f, 1.0f);
+        if (r >= 1.0f || r <= 0.0f) rIncrement = -rIncrement; 
+        if (g >= 1.0f || g <= 0.0f) gIncrement = -gIncrement; 
+        if (b >= 1.0f || b <= 0.0f) bIncrement = - bIncrement;
+
+        glClearColor(r, g, b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        r += rIncrement;
+        g += gIncrement;
+        b += bIncrement;
 
         glfwSwapBuffers(window);
         glfwPollEvents();
